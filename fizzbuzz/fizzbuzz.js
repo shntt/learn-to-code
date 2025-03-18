@@ -1,25 +1,33 @@
-let arr = [];
-let numberOfElements = 100;
-
+// 空の配列に、1から指定した数まで、要素を追加する関数
 function createArr(num) {
+    let arr = [];
     for (let i = 1; i <= num; i++) {
         arr.push(i);
     }
+    return arr;
 }
 
-function fizzbuzz() {
+// 配列の要素を一つずつ処理して、コンソールに出力する関数
+function checkElementInArr(arr) {
     for (const i of arr) {
-        if (i % 15 == 0) {
-            console.log("FizzBuzz!")
-        } else if (i % 3 == 0) {
-            console.log("Fizz!");
-        } else if (i % 5 == 0) {
-            console.log("Buzz!")
-        } else {
-            console.log(i);
-        }
+        console.log(checkNumber(i));
     };
 }
 
-createArr(numberOfElements);
-fizzbuzz();
+// 任意の数値を与えて、FizzかBuzzかFizz Buzzを返す関数
+function checkNumber(num) {
+    if (num % 3 == 0 || num % 5 == 0) {
+        if (num % 5 != 0) {
+            return "Fizz!";
+        } else if (num % 3 != 0){
+            return "Buzz!";
+        } else {
+            return "Fizz Buzz!!";
+        }
+    } else {
+        return num;
+    }
+}
+
+let numberOfElements = 100;
+checkElementInArr(createArr(numberOfElements));
