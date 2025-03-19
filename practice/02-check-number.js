@@ -1,3 +1,6 @@
+// 任意の数値を与えて、FizzかBuzzかFizz Buzzを返す関数をつくる
+// 2025-3-18
+
 // 空の配列に、1から指定した数まで、要素を追加する関数
 function createArr(num) {
     let arr = [];
