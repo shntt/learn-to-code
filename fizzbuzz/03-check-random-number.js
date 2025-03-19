@@ -23,5 +23,4 @@ function createNaturalNumber() {
 }
 
 // ランダムで生成した自然数N(N <= 10000)を与えて結果を表示する
-createNaturalNumber()
 checkNumber(createNaturalNumber())
