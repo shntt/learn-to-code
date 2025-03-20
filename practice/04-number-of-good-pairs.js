@@ -8,7 +8,7 @@
 let nums = [];
 
 function numIdenticalPairs(nums) {
-    let totalOfGoodPairs = null;
+    let totalOfGoodPairs = 0;
 
     // 配列numsのインデックス0から最後1つ前まで、順に回していく
     for (let i = 0; i < nums.length - 1; i++) {
