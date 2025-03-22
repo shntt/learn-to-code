@@ -22,9 +22,24 @@ function twoSum(nums, target) {
     }
 }
 
+// 計算量を抑えてみる 2025.3.21
+function twoSum2(nums, target) {
+    let mySet = new Set;
+
+    for (let i = 0; i < nums.length; i++) {
+        mySet.add(nums[i]);
+    }
+
+    for (let j = 0; j < nums.length - 1; j++) {
+        if (mySet.has(target - nums[i])) {
+            return true;
+        }
+    }
+}
+
 // Example 1 -> [0, 1]
-// nums = [2,7,11,15];
-// target = 9;
+nums = [2,7,11,15];
+target = 9;
 
 // Example 2 -> [1, 2]
 // nums = [3,2,4];

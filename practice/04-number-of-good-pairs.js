@@ -23,7 +23,7 @@ function numIdenticalPairs(nums) {
     return totalOfGoodPairs;
 }
 
-// nums = [1,2,3,1,1,3];   // 4
+nums = [1,2,3,1,1,3];   // 4
 // nums = [1,1,1,1];       // 6
 // nums = [1,2,3];         // 0
 
