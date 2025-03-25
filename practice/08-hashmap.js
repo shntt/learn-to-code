@@ -143,7 +143,6 @@ myMap.set("Melon", 1990);
 myMap.set("Meat", 1290);
 myMap.set("Rice", 3990);
 myMap.set("Potato", 590);
-myMap.set("Potaty", 590);
 myMap.set("Asparagus", 590);
 myMap.set("Apple", 899);
 
