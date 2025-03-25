@@ -20,6 +20,9 @@ class HashMapItem {
 class MyHashMap {
     constructor(size = 1000) {
         this.arr = Array.from({length: size}, () => []);
+        this.initialSize = size;
+        this.amountOfItems = 0;
+        this.loadFactorThreshold = 0.75
     }
 
     hashFunc(input) {
@@ -31,66 +34,67 @@ class MyHashMap {
     }
 
     set(key, value) {
-        let elementOfArray = new HashMapItem(key, value);
-        let loadFactor = this.size() / this.arr.length;
-
-        if (loadFactor >= 0.75) {
-            this.rebalance();
-        }
-
-        let hashedArray = this.arr[this.hashFunc(key)];
+        const elementOfArray = new HashMapItem(key, value);
+        const hashedArray = this.arr[this.hashFunc(key)];
+        let updated = false;
 
         if (hashedArray.length === 0) {
             this.arr[this.hashFunc(key)] = [elementOfArray];
-            return;
+            this.amountOfItems += 1;
+            updated = true;
         }
 
-        for (const item of hashedArray) {
-            if (item.key == key) {
-                item.value = value;
-                return;
+        if (!updated) {
+            for (let i = 0; i < hashedArray.length; i++) {
+                if (hashedArray[i].key === key) {
+                    hashedArray[i] = elementOfArray;
+                    updated = true;
+                    break;
+                }
             }
         }
-
-        hashedArray.push(elementOfArray);
-        return;
+        
+        if (!updated) {
+            hashedArray.push(elementOfArray);
+            this.amountOfItems += 1;
+        }
+        
+        if (this.size() / this.arr.length >= this.loadFactorThreshold) {
+            this.rebalance();
+        }
     }
-
-    findItem(key) {
-        let hashedArray = this.arr[this.hashFunc(key)];
+    
+    get(key) {
+        const hashedArray = this.arr[this.hashFunc(key)];
 
         if (hashedArray.length === 0) {
             return undefined;
         }
 
         for (const item of hashedArray) {
-            if (item.key == key) {
-                return item;
+            if (item.key === key) {
+                return item.value;
             }
         }
 
         return undefined;
     }
-    
-    get(key) {
-        let item = this.findItem(key);
-        return item ? item.value : undefined;
-    }
 
     has(key) {
-        return this.findItem(key) !== undefined;
+        return this.get(key) !== undefined;
     }
 
     remove(key) {
-        let hashedArray = this.arr[this.hashFunc(key)];
+        const hashedArray = this.arr[this.hashFunc(key)];
 
         if (hashedArray.length === 0) {
             return false;
         }
 
         for (let i = 0; i < hashedArray.length; i++) {
-            if (hashedArray[i].key == key) {
+            if (hashedArray[i].key === key) {
                 hashedArray.splice(i, 1);
+                this.amountOfItems -= 1;
                 return true;
             }
         }
@@ -99,35 +103,28 @@ class MyHashMap {
     }
 
     clear() {
-        this.arr = Array.from({length: this.size}, () => []);
+        this.arr = Array.from({length: this.initialSize}, () => []);
+        this.amountOfItems = 0;
         return;
     }
 
     size() {
-        let counter = 0;
-
-        for (let item of this.arr) {
-            if (item.length !== 0) {
-                counter += item.length;
-            }
-        }
-
-        return counter;
+        return this.amountOfItems;
     }
 
     rebalance() {
         let tempArray = this.arr;
         this.arr = Array.from({ length: this.arr.length * 2 }, () => []);
+        this.amountOfItems = 0;
 
         for (let items of tempArray) {
-            if (items !== undefined) {
-                for (let item of items) {
-                    this.set(item.key, item.value);
-                }
+            if (items.length === 0) {
+                continue;
+            }
+            for (const item of items) {
+                this.set(item.key, item.value);
             }
         }
-
-        return;
     }
 }
 
