@@ -34,8 +34,8 @@ class MyHashMap {
     }
 
     set(key, value) {
-        let item = new HashMapItem(key, value);
-        let hashArray = this.arr[this.hashFunc(key)];
+        const item = new HashMapItem(key, value);
+        const hashArray = this.arr[this.hashFunc(key)];
 
         for (let i = 0; i < hashArray.length; i++) {
             if (hashArray[i].key === key) {
@@ -101,7 +101,7 @@ class MyHashMap {
     }
 
     rebalance() {
-        let tempArray = this.arr;
+        const tempArray = this.arr;
         this.arr = Array.from({ length: this.arr.length * 2 }, () => []);
         this.amountOfItems = 0;
 
