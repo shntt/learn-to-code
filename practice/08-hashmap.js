@@ -19,7 +19,7 @@ class HashMapItem {
 
 class MyHashMap {
     constructor(size = 1000) {
-        this.arr = Array.from({length: size}, () => []);
+        this.arr = Array.from({ length: size }, () => []);
         this.initialSize = size;
         this.amountOfItems = 0;
         this.loadFactorThreshold = 0.75
@@ -34,44 +34,32 @@ class MyHashMap {
     }
 
     set(key, value) {
-        const elementOfArray = new HashMapItem(key, value);
-        const hashedArray = this.arr[this.hashFunc(key)];
-        let updated = false;
+        let item = new HashMapItem(key, value);
+        let hashArray = this.arr[this.hashFunc(key)];
 
-        if (hashedArray.length === 0) {
-            this.arr[this.hashFunc(key)] = [elementOfArray];
-            this.amountOfItems += 1;
-            updated = true;
-        }
-
-        if (!updated) {
-            for (let i = 0; i < hashedArray.length; i++) {
-                if (hashedArray[i].key === key) {
-                    hashedArray[i] = elementOfArray;
-                    updated = true;
-                    break;
-                }
+        for (let i = 0; i < hashArray.length; i++) {
+            if (hashArray[i].key === key) {
+                hashArray[i] = item;
+                return;
             }
         }
-        
-        if (!updated) {
-            hashedArray.push(elementOfArray);
-            this.amountOfItems += 1;
-        }
-        
+
+        hashArray.push(item);
+        this.amountOfItems += 1;
+
         if (this.size() / this.arr.length >= this.loadFactorThreshold) {
             this.rebalance();
         }
     }
-    
-    get(key) {
-        const hashedArray = this.arr[this.hashFunc(key)];
 
-        if (hashedArray.length === 0) {
+    get(key) {
+        const hashArray = this.arr[this.hashFunc(key)];
+
+        if (hashArray.length === 0) {
             return undefined;
         }
 
-        for (const item of hashedArray) {
+        for (const item of hashArray) {
             if (item.key === key) {
                 return item.value;
             }
@@ -85,15 +73,15 @@ class MyHashMap {
     }
 
     remove(key) {
-        const hashedArray = this.arr[this.hashFunc(key)];
+        const hashArray = this.arr[this.hashFunc(key)];
 
-        if (hashedArray.length === 0) {
+        if (hashArray.length === 0) {
             return false;
         }
 
-        for (let i = 0; i < hashedArray.length; i++) {
-            if (hashedArray[i].key === key) {
-                hashedArray.splice(i, 1);
+        for (let i = 0; i < hashArray.length; i++) {
+            if (hashArray[i].key === key) {
+                hashArray.splice(i, 1);
                 this.amountOfItems -= 1;
                 return true;
             }
@@ -103,7 +91,7 @@ class MyHashMap {
     }
 
     clear() {
-        this.arr = Array.from({length: this.initialSize}, () => []);
+        this.arr = Array.from({ length: this.initialSize }, () => []);
         this.amountOfItems = 0;
         return;
     }
@@ -117,7 +105,7 @@ class MyHashMap {
         this.arr = Array.from({ length: this.arr.length * 2 }, () => []);
         this.amountOfItems = 0;
 
-        for (let items of tempArray) {
+        for (const items of tempArray) {
             if (items.length === 0) {
                 continue;
             }
