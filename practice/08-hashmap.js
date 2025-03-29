@@ -1,152 +1,118 @@
 // HashMap
 // 2025-3-23
-
-/* 課題
-1. HashMapを実装してください
+/* 
+1. HashMapを実装する
     * set(key, value)
     * get(key) -> Optional(item)
     * remove(key)
     arrayのサイズは1000で
-2. HashMapのリバランスを実装してください */
+2. HashMapのリバランスを実装する */
 
-// 未実装
-// - MD5を使用したハッシュ関数
-//
-// まだ試してないこと
-// - 複数の要素を同時にセットできる？
-// - それぞれの関数の共通の要素を、別の関数にできる？
+const crypto = require('crypto');
+
+class HashMapItem {
+    constructor(key, value) {
+        this.key = key;
+        this.value = value;
+    }
+}
 
 class MyHashMap {
-    arr = Array.from({length: 10});
-    set(key, value) {
-        let hashedIndex = this.hashFunc(key);
-        let loadFactor = this.size() / this.arr.length;
+    constructor(size = 1000) {
+        this.arr = Array.from({ length: size }, () => []);
+        this.initialSize = size;
+        this.amountOfItems = 0;
+        this.loadFactorThreshold = 0.75
+    }
 
-        if (loadFactor >= 0.5) {
-            console.log(`Need to rebalence.`);
-            this.rebalance();
-        }
-        
-        if (this.arr[hashedIndex] === undefined) {
-            this.arr[hashedIndex] = [[key, value]];
-            console.log(`${key} added. LF:${loadFactor}(${this.size()}/${this.arr.length})`);
-            return;
-        }
-        
-        for (let i = 0; i < this.arr[hashedIndex].length; i++) {
-            if (this.arr[hashedIndex][i][0] == key) {
-                this.arr[hashedIndex] = [[key, value]];
-                console.log(`${key} overwrote. LF:${loadFactor}(${this.size()}/${this.arr.length})`);
+    hashFunc(input) {
+        const hash = crypto.createHash('md5');
+        hash.update(input);
+        const hashHex = hash.digest('hex');
+        const hashNum = parseInt(hashHex.slice(0, 8), 16);
+        return hashNum % this.arr.length;
+    }
+
+    set(key, value) {
+        const item = new HashMapItem(key, value);
+        const hashArray = this.arr[this.hashFunc(key)];
+
+        for (let i = 0; i < hashArray.length; i++) {
+            if (hashArray[i].key === key) {
+                hashArray[i] = item;
                 return;
             }
         }
 
-        this.arr[hashedIndex].push([key, value]);
-        console.log(`${key} added. LF:${loadFactor}(${this.size()}/${this.arr.length})`);
-        return;
+        hashArray.push(item);
+        this.amountOfItems += 1;
+
+        if (this.size() / this.arr.length >= this.loadFactorThreshold) {
+            this.rebalance();
+        }
     }
 
     get(key) {
-        let hashedIndex = this.hashFunc(key)
-        
-        if (this.arr[hashedIndex] === undefined) {
-            console.log(`${key} does not exist.`);
-            return;
+        const hashArray = this.arr[this.hashFunc(key)];
+
+        if (hashArray.length === 0) {
+            return undefined;
         }
-        
-        for (let i = 0; i < this.arr[hashedIndex].length; i++) {
-            if (this.arr[hashedIndex][i][0] == key) {
-                console.log(`${key}'s value is ${this.arr[hashedIndex][i][1]}.`);
-                return this.arr[hashedIndex][i][1];
+
+        for (const item of hashArray) {
+            if (item.key === key) {
+                return item.value;
             }
         }
 
-        console.log(`${key} does not exist.`);
-        return;
+        return undefined;
     }
 
     has(key) {
-        let hashedIndex = this.hashFunc(key);
-        
-        if (this.arr[hashedIndex] === undefined) {
-            console.log(`${key} does not exist.`)
-            return false;
-        }
-        
-        for (let i = 0; i < this.arr[hashedIndex].length; i++) {
-            if (this.arr[hashedIndex][i][0] == key) {
-                console.log(`${key} exists.`)
-                return true;
-            }
-        }
-
-        console.log(`${key} does not exist.`)
-        return false;
+        return this.get(key) !== undefined;
     }
 
     remove(key) {
-        let hashedIndex = this.hashFunc(key);
-        
-        if (this.arr[hashedIndex] === undefined) {
-            this.arr[hashedIndex] = [[key, value]];
-            console.log(`${key} does not exist.`);
+        const hashArray = this.arr[this.hashFunc(key)];
+
+        if (hashArray.length === 0) {
             return false;
         }
-        
-        for (let i = 0; i < this.arr[hashedIndex].length; i++) {
-            if (this.arr[hashedIndex][i][0] == key) {
-                this.arr[hashedIndex].splice(i, 1);
-                console.log(`${key} successfully removed.`);
+
+        for (let i = 0; i < hashArray.length; i++) {
+            if (hashArray[i].key === key) {
+                hashArray.splice(i, 1);
+                this.amountOfItems -= 1;
                 return true;
             }
         }
 
-        console.log(`${key} does not exist.`);
         return false;
     }
 
     clear() {
-        this.arr = Array.from({length: 10});
+        this.arr = Array.from({ length: this.initialSize }, () => []);
+        this.amountOfItems = 0;
         return;
     }
 
     size() {
-        let counter = 0;
-
-        for (let i = 0; i < this.arr.length; i++) {
-            if (this.arr[i] !== undefined) {
-                counter += this.arr[i].length;
-            }
-        }
-
-        return counter;
+        return this.amountOfItems;
     }
 
     rebalance() {
-        let tempArr = this.arr;
-        this.arr = Array.from({length: this.arr.length * 2});
+        const tempArray = this.arr;
+        this.arr = Array.from({ length: this.arr.length * 2 }, () => []);
+        this.amountOfItems = 0;
 
-        console.log(`Current array duplicated(${tempArr.length}):[${tempArr}]`);
-        console.log(`New empty array generated(${this.arr.length}): [${this.arr}]`);
-
-        for (let i = 0; i < tempArr.length; i++) {
-            if (tempArr[i] !== undefined) {
-                for (let j = 0; j < tempArr[i].length; j++) {
-                    this.set(tempArr[i][j][0], tempArr[i][j][1]);
-                }
+        for (const items of tempArray) {
+            if (items.length === 0) {
+                continue;
+            }
+            for (const item of items) {
+                this.set(item.key, item.value);
             }
         }
-
-        console.log(`Rebalance completed.`);
-        console.log(`New arrray(${this.arr.length}): [${this.arr}]`);
-    }
-
-    hashFunc(key) {
-        let hashedKey = key.length;
-
-        // MD5を使う(以下は仮にlengthを使っている)
-
-        return Number.parseInt(`${hashedKey}`);
     }
 }
 
@@ -155,7 +121,6 @@ const myMap = new MyHashMap();
 myMap.set("Apple", 499);
 myMap.set("Egg", 4990);
 myMap.set("Grape", 500);
-myMap.set("Apple", 899);
 myMap.set("Orange", 799);
 myMap.set("Bread", 799);
 myMap.set("Grape", 500);
@@ -163,19 +128,15 @@ myMap.set("Melon", 1990);
 myMap.set("Meat", 1290);
 myMap.set("Rice", 3990);
 myMap.set("Potato", 590);
+myMap.set("Asparagus", 590);
+myMap.set("Apple", 899);
 
 let testWord = "Apple";
-console.log(`[${myMap.arr}]`);
-myMap.get(testWord);
-myMap.has(testWord);
 
-console.log(`[${myMap.arr}]`);
-console.log(`myMap has ${myMap.size()} elements.`);
-
-myMap.remove(testWord);
-console.log(`[${myMap.arr}]`);
-console.log(`myMap has ${myMap.size()} elements.`);
-
+console.log(myMap.get(testWord));
+console.log(myMap.has(testWord));
+console.log(myMap.remove(testWord));
+console.log(myMap.has(testWord));
+console.log(myMap.size());
 myMap.clear();
-console.log(`[${myMap.arr}]`);
-console.log(`myMap has ${myMap.size()} elements.`);
+console.log(myMap.size());
