@@ -1,0 +1,384 @@
+/* 
+- Animation
+- :hover
+- 写真サイズ
+ */
+
+* {
+    padding: 0px;
+    margin: 0px;
+    color: white;
+    font-family: futura, "Noto Sans JP", sans-serif;
+}
+
+h1 {
+    font-size: 6.5vw;
+    padding-bottom: 1.5vw;
+}
+
+h2 {
+    font-size: 4.5vw;
+    padding-bottom: 5.2vw;
+    text-align: center;
+    background-color: #111111;
+}
+
+h3 {
+    font-size: 1.9vw;
+    padding-bottom: 2vw;
+}
+
+p {
+    font-size: 1.02vw;
+    font-weight: 700;
+    line-height: 1.9;
+}
+
+header {
+    height: 7vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #111111;
+}
+
+#logo {
+    height: 2vw;
+    margin-left: 2.5vw;
+}
+
+nav .menu {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    list-style: none;
+    font-size: 0.75vw;
+    gap: 3.5vw;
+    margin-right: 1.8vw;
+}
+
+nav a {
+    text-decoration: none;
+}
+
+.nav-contact {
+    text-align: center;
+    height: 5vw;
+    width: 5vw;
+    border-radius: 20vw;
+    border: #e3e3e3;
+    border-style: solid;
+    border-width: 0.15vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    font-size: 0.75vw;
+}
+
+.nav-contact:hover {
+    background-color: #e3e3e3;
+    color: #000000;
+}
+
+.nav-contact a:hover {
+    color: #000000;
+}
+
+.top {
+    text-align: center;
+    padding: 4vw 0px 6vw 0px;
+    background-color: #111111;
+}
+
+.top h3 {
+    font-size: 2vw;
+}
+
+.top p {
+    font-size: 1.1vw;
+    font-weight: 800;
+    line-height: 2.3;
+}
+
+div.supported-athletes {
+    display: flex;
+    flex-direction: row;
+    gap: 4.3vw;
+    padding: 0px 7.5vw;
+    background-color: #111111;
+    justify-content: center;
+}
+
+.player {
+    height: 73.5vw;
+    width: 30vw;
+}
+
+.player img {
+    width: 100%;
+    object-fit: cover;
+    padding-bottom: 3vw 
+}
+
+.player h3 {
+    padding-bottom: 0.9vw;
+}
+
+.year {
+    font-size: 0.85vw;
+    position: relative;
+    margin-bottom: 4.5vw;
+}
+
+.year::after {
+    content: "";
+    width: 3.2vw;
+    height: 0.05vw;
+    background-color: #e3e3e3;
+    position: absolute;
+    bottom: -2.4vw;
+    left: 0;
+}
+
+.player-description {
+    position: relative;
+    margin-bottom: 4.5vw;
+}
+
+.player-description::after {
+    content: "";
+    width: 3.2vw;
+    height: 0.05vw;
+    background-color: #e3e3e3;
+    position: absolute;
+    bottom: -2.3vw;
+    left: 0;
+}
+
+.interviews {
+    padding-bottom: 1vw;
+}
+
+.fellows {
+    height: 71.9vw;
+    display: flex;
+    flex-direction: column;
+    padding: 0px 6.5vw;
+    background-color: #ffffff;
+    color: #111111;
+}
+
+.fellows h2 {
+    background-color: #ffffff;
+    color: #111111;
+    padding-top: 9vw;
+    padding-bottom: 5.4vw;
+}
+
+.fellow-player {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: 3.6vw;
+    padding: 0px 2vw 6.1vw 2vw;
+    transition: all 0.8s ease-out;
+    transform: translate(0ox, -100px);
+    opacity: 0;
+}
+
+.fellow-player.anim {
+    transform: translate(0);
+    opacity: 1;
+}
+
+.fellow-name {
+    position: relative;
+    margin-bottom: 0.6vw;
+}
+
+.fellow-name::after {
+    content: "";
+    width: 3.2vw;
+    height: 0.05vw;
+    background-color: #111111;
+    position: absolute;
+    bottom: 8px;
+    left: 0;
+}
+
+div.fellows img {
+    width: 30%;
+    object-fit: cover;
+}
+
+.fellow-description p, .fellow-description h3, .fellow-description h2 {
+    color: #111111;
+}
+
+.fellow-description  {
+    color: #111111;
+}
+
+.team-activities {
+    height: 20.9vw;
+    padding: 0px 0px;
+    background-color: #e3e3e3;
+    color: #111111;
+    height: 56.7vw;
+}
+
+.teams {
+    display: flex;
+    flex-direction: row;
+    gap: 100px;
+    padding: 0px 7.5vw;
+    background-color: #e3e3e3;
+}
+
+.player.team {
+    transition: all 0.8s ease-out;
+    transform: translate(0ox, -100px);
+    opacity: 0;
+}
+
+.player.team.anim {
+    transform: translate(0);
+    opacity: 1;
+}
+
+.team-activities img {
+    padding-bottom: 1.3vw;
+}
+
+.team-activities h2 {
+    background-color: #e3e3e3;
+    color: #111111;
+    padding-top: 9vw;
+    padding-bottom: 5.4vw;
+}
+
+.team-activities h3 {
+    color: #111111;
+    background-color: #e3e3e3;
+    padding-bottom: 1.5vw;
+}
+
+.team-activities p {
+    color: black;
+}
+
+.contact {
+    height: 20.9vw;
+    padding: 0px 0px;
+    background-color: #000000;
+    color: #e3e3e3;
+    height: 35.4vw;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.contact img {
+    padding-top: 5vw;
+    height: 12.5vw;
+    padding-bottom: 5.1vw;
+}
+
+.btn {
+    text-align: center;
+    height: 6.2vw;
+    width: 27vw;
+    border-radius: 20vw;
+    border: #e3e3e3;
+    border-style: solid;
+    border-width: 0.23vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    font-size: 1.1vw;
+    font-weight: 600;
+    color: #e3e3e3;
+    background-color: #000000;
+}
+
+.btn:hover {
+    background-color: #e3e3e3;
+    color: #000000;
+}
+
+footer {
+    border-width: 1px 0px 0px 0px;
+    border-style:solid;
+    height: 5.5vw;
+    padding: 3.8vw 5vw 6.2vw 5vw;
+    background-color: #000000;
+    color: #333333;
+}
+
+.footer-icons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.footer-logo {
+    border-width: 0px 0.1vw 0px 0px;
+    border-style:solid;
+    padding-right: 3vw;
+}
+
+.left-icons {
+    display: flex;
+    align-items: center;
+    gap: 2.5vw;
+}
+
+.brand-icons {
+    display: flex;
+    align-items: center;
+    gap: 2.7vw;
+}
+
+footer img {
+    height:2.75vw;
+}
+
+.brand-icons img {
+    height:3.5vw;
+}
+
+footer p {
+    padding-top: 2.5vw;
+    font-size: 1vw;
+    font-weight: 100;
+    color: #737373
+}
+
+.right-icons {
+    display: flex;
+    align-items: center;
+    gap: 1.3vw;
+    font-size: 0.9vw;
+    font-weight: 100;
+    color: #999999
+}
+
+a.twitter {
+    text-align: center;
+    height: 3.5vw;
+    width: 3.5vw;
+    border-radius: 12vw;
+    background-color: #e3e3e3;
+    border-width: 0.15vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.twitter img {
+    width: 1.6vw;
+    height: auto;
+}

@@ -1,0 +1,126 @@
+/* 
+- Animation
+- :hover
+- 写真サイズ
+ */
+
+body {
+    color: #000000;
+}
+
+main {
+    background-color: #e3e3e3;
+}
+
+h2, h3, p, li {
+    background-color: #e3e3e3;
+    color: #000000;
+}
+
+h2 {
+    font-size: 4.5vw;
+    font-weight: 550;
+    line-height: 1.9;
+    padding-bottom: 1.7vw;
+}
+
+h3 {
+    font-size: 1.2vw;
+    font-weight: 700;
+    line-height: 1.9;
+    padding-bottom: 0.6vw;
+}
+
+ul {
+    font-size: 0.95vw;
+    font-weight: 700;
+    line-height: 1.9;
+    padding-left: 1.9vw;
+    list-style: disc;
+}
+
+header {
+    padding-bottom: 0.3vw;
+    background-color: #e3e3e3;
+}
+
+li a {
+    color: #000000;
+    font-weight: 100;
+}
+
+.nav-contact {
+    text-align: center;
+    height: 5vw;
+    width: 5vw;
+    border-radius: 20vw;
+    border: #000000;
+    border-style: solid;
+    border-width: 0.15vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    font-size: 0.75vw;
+}
+
+.nav-contact:hover {
+    background-color: #000000;
+    color: #e1e1e1;
+}
+
+.nav-contact a:hover {
+    color: #000000;
+}
+
+.contact-top {
+    height: 20.9vw;
+    padding: 0px 17.5vw;
+    background-color: #e3e3e3;
+    color: #111111;
+    height: 28.5vw;
+}
+
+.forms {
+    background-color: #e3e3e3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form {
+    height: 100vw;
+    width: 63vw;
+    background-color: white;
+    border: #000000;
+    border-style: solid;
+    border-width: 0.1vw;
+    margin: 0vw 20vw;
+}
+
+.form-line {
+    height: 5.1vw;
+    background-color: white;
+    border: #626262;
+    border-style: solid;
+    border-width: 0.05vw;
+}
+
+.form-btn {
+    text-align: center;
+    height: 4vw;
+    width: 27vw;
+    border-radius: 20vw;
+    border: #626262;
+    border-style: solid;
+    border-width: 0.1vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    font-size: 1.25vw;
+    font-weight: 600;
+    color: #979797;
+    background-color: #e3e3e3;
+    margin-bottom: 8vw;
+}
